@@ -21,6 +21,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import net.sourceforge.pmd.RulePriority;
 import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
@@ -61,10 +62,10 @@ public class RuleDocGeneratorTest {
     public void testSingleRuleset() throws RuleSetNotFoundException, IOException {
         RuleDocGenerator generator = new RuleDocGenerator(writer, root);
 
-        RuleSetFactory rsf = RulesetsFactoryUtils.defaultFactory();
+        RuleSetFactory rsf = RulesetsFactoryUtils.createFactory(RulePriority.LOW, false, false, true);
         RuleSet ruleset = rsf.createRuleSet("rulesets/ruledoctest/sample.xml");
 
-        generator.generate(Arrays.asList(ruleset).iterator(),
+        generator.generate(Arrays.asList(ruleset),
                 Arrays.asList(
                         "rulesets/ruledoctest/sample-deprecated.xml",
                         "rulesets/ruledoctest/other-ruleset.xml"));
